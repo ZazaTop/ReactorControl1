@@ -1,0 +1,25 @@
+local internet = require("internet")
+local term = require ("term")
+term.clear()
+local component = require("component")    
+local reactor = component.br_reactor  
+local max_energy = "10000000" 
+
+local function niveau()         
+    local energy = reactor.getEnergyStored()   
+    pct = (energy * 100) / max_energy 
+end
+
+while true do               
+    niveau()              
+  
+    if pct < 50 and reactor.getActive() == false then
+        reactor.setActive(true)
+         print("Реактор включен") 
+elseif pct >= 90 and reactor.getActive() == true then  
+        reactor.setActive(false)
+        print("Реактор выключен")  end
+        while pct <= 90 and pct >= 20  do niveau()  
+print("Осталося заряда в процентах:"..pct.."Осталося топлива:"..(br_reactor.getFuelAmmount() * 100)/br_reactor.getFuelAmmountMax()) os.sleep(600) end
+    os.sleep(1)               
+end
